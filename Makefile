@@ -1,8 +1,8 @@
 CC=gcc
 CFLAGS=-I.
-DEPS =
-CLIENT_OBJ = test-client.o  
-SERVER_OBJ = test-server.o
+DEPS = debug.h
+CLIENT_OBJ = test-client.o debug.o 
+SERVER_OBJ = test-server.o debug.o
 
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
@@ -20,4 +20,4 @@ test-server: $(SERVER_OBJ)
 .PHONY: clean
 
 clean:
-	rm -f *.o
+	rm -f *.o test-client test-server

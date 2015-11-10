@@ -9,27 +9,12 @@
 #include <stdint.h>
 #include <errno.h>
 
+#include "debug.h"
+
 #define MAXPENDING 5    /* Max connection requests */
 #define BUFFSIZE 256
 
-const char *test_str = "ovs test\0"; 
-
-void dump_packet(char *ptr, int bytes) {
-	int i;
-
-	printf("\n");
-	for (i = 0; i < bytes; i++) {
-		printf("0x%x ", ptr[i]);
-	}
-	printf("\n");
-}
-
-void dump_msg(char *ptr, int bytes) {
-	char tmp[bytes + 1];
-	memcpy(tmp, ptr, bytes);
-	tmp[bytes + 1] = '\0';
-	printf("msg: %s\n", tmp);
-}
+const char *test_str = "test inter ttt";
 
  
 void receive_data(int sock) {
@@ -57,6 +42,8 @@ void send_data(int sock) {
 	write(sock, test_str, strlen(test_str));
 }
 
+const char *server_ip = "192.168.254.128";
+
 
 int main(int argc, char *argv[]) {
 	int test_sock;
@@ -73,7 +60,7 @@ int main(int argc, char *argv[]) {
 	memset(&test_server, 0, sizeof(test_server));
 	test_server.sin_family = AF_INET;
 	test_server.sin_port = htons(port);
-	test_server.sin_addr.s_addr = inet_addr("127.0.0.1");;
+	test_server.sin_addr.s_addr = inet_addr(server_ip);
 
 
 	/* Create the TCP socket */

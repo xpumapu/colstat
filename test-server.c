@@ -7,27 +7,10 @@
 #include <netinet/in.h>
 #include <stdint.h>
 
+#include "debug.h"
+
 #define MAXPENDING 5    /* Max connection requests */
 #define BUFFSIZE 256
-
-
-
-void dump_packet(char *ptr, int bytes) {
-	int i;
-
-	printf("\n");
-	for (i = 0; i < bytes; i++) {
-		printf("0x%x ", ptr[i]);
-	}
-	printf("\n");
-}
-
-void dump_msg(char *ptr, int bytes) {
-	char tmp[bytes + 1];
-	memcpy(tmp, ptr, bytes);
-	tmp[bytes + 1] = '\0';
-	printf("msg: %s\n", tmp);
-}
 
  
 void receive_data(int sock) {
